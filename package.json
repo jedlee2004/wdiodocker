@@ -1,0 +1,45 @@
+{
+  "name": "webdriverio_boilerplate",
+  "description": "UI Automation",
+  "main": "index.js",
+  "engines": {
+    "node": ">=4.5.0",
+    "npm": "^3.0.0"
+  },
+  "scripts": {
+    "clean": "rmdir ./node_modules",
+    "e2e-setup": "./node_modules/selenium-standalone/bin/selenium-standalone install --drivers.chrome.version=2.37 --drivers.chrome.baseURL=https://chromedriver.storage.googleapis.com",
+    "selenium-server": "./node_modules/selenium-standalone/bin/selenium-standalone start",
+    "repl": "./node_modules/.bin/wdio repl chrome"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0",
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "allure-commandline": "^2.5.0",
+    "atob": "^2.1.0",
+    "deepmerge": "^2.1.1",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "jasmine-console-reporter": "^3.0.2",
+    "prettier": "^1.14.2",
+    "prettier-eslint": "^8.8.2",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
+    "selenium-standalone": "^6.15.1",
+    "wdio-allure-reporter": "^0.6.2",
+    "wdio-jasmine-framework": "^0.3.4",
+    "wdio-junit-reporter": "^0.4.3",
+    "wdio-selenium-standalone-service": "0.0.10",
+    "wdio-spec-reporter": "^0.1.4",
+    "webdriver-manager": "^12.1.0",
+    "webdriverajax": "^2.2.0",
+    "webdriverio": "^4.13.1",
+    "yargs": "~11.0.0"
+  }
+}
