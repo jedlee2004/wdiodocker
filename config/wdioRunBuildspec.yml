@@ -1,0 +1,20 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - echo Entered the INSTALL phase...
+      - APP_DIR=`pwd`
+  build:
+    commands:
+      - echo `pwd`
+      - npm install
+      - npm run e2e-setup
+  post_build:
+    commands:
+      - node_modules/.bin/wdio sampleTests/wdio.conf.js --suite smoke --browser=headless 
+
+artifacts:
+  files:
+    # TODO: Only add the reports file
+    - '**/*'

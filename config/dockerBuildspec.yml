@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - REPOSITORY_URI=731937110954.dkr.ecr.us-east-2.amazonaws.com/webdriverio
+      - IMAGE_TAG=webdriverio:latest
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...  
+      - docker build -t webdriverio . 
+      - docker tag webdriverio:latest 731937110954.dkr.ecr.us-east-2.amazonaws.com/webdriverio:latest       
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push 731937110954.dkr.ecr.us-east-2.amazonaws.com/webdriverio:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"webdriverIO","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+artifacts:
+    files: imagedefinitions.json
