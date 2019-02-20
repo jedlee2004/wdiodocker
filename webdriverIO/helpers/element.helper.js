@@ -46,7 +46,7 @@ module.exports = class ElementHelper {
 
   waitForSpinners(selector, additionalPause = 500) {
     browser.waitUntil(
-      () => selector.isVisible() === false,
+      () => selector.isDisplayed() === false,
       timeout,
       `expected loading spinner to be gone after ${timeout} milliseconds`,
     );
@@ -60,7 +60,7 @@ module.exports = class ElementHelper {
 
   isElemVisible(selector) {
     try {
-      selector.waitForVisible(timeout);
+      selector.waitForDisplayed(timeout);
       return true;
     } catch (error) {
       console.error(
@@ -73,7 +73,7 @@ module.exports = class ElementHelper {
   setInput(text, selector, noTab) {
     let input = text;
     if (typeof text === 'number') input = text.toString();
-    selector.waitForVisible(timeout);
+    selector.waitForDisplayed(timeout);
     selector.scroll();
     selector.click();
     selector.clearElement();
@@ -104,7 +104,7 @@ module.exports = class ElementHelper {
 
   getSetDropDownList(_set, selector, button) {
     const dropListButton = button;
-    dropListButton.waitForVisible(timeout);
+    dropListButton.waitForDisplayed(timeout);
     dropListButton.click();
 
     const list = selector ? selector.$$('ul li') : $$('ul li');
@@ -136,7 +136,7 @@ module.exports = class ElementHelper {
   }
 
   getSetCombobox(baseSelector, option) {
-    baseSelector.waitForVisible(timeout);
+    baseSelector.waitForDisplayed(timeout);
     const base = baseSelector.selector.includes('select')
       ? baseSelector
       : baseSelector.$('select');
@@ -193,7 +193,7 @@ module.exports = class ElementHelper {
   }
 
   getTable(baseSelector) {
-    baseSelector.waitForVisible(timeout);
+    baseSelector.waitForDisplayed(timeout);
 
     const table = {};
     table.headers = baseSelector.$$('thead th').map((th) => {

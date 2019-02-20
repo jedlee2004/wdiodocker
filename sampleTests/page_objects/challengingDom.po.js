@@ -21,7 +21,8 @@ module.exports = class ChallengingDom extends Elements {
   clickButton(button) {
     button.waitForExist(timeout);
     const originalVal = button.getText();
-    button.click().pause(100);
+    button.click();
+    browser.pause(100);
     const newVal = button.getText();
 
     return {

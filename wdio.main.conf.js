@@ -1,17 +1,28 @@
 const JasmineConsoleReporter = require('jasmine-console-reporter');
 const allureReport = require('./webdriverIO/utils/allureReport');
+require('dotenv').config();
 
 exports.config = {
-  services: ['selenium-standalone'],
-  port: 4444,
-  seleniumArgs: {
-    host: '127.0.0.1',
-  },
+  // Config to run off of selenium server jar
+  // runner: 'local',
+  // services: ['selenium-standalone'],
+  // port: 4444,
+  // seleniumArgs: {
+  //   host: '127.0.0.1',
+  // },
+
+  // Config to run using browser stack
+  host: 'hub.browserstack.com',
+  services: ['browserstack'],
+  user: process.env.BROWSERSTACK_USERNAME,
+  key: process.env.BROWSERSTACK_ACCESS_KEY,
+  browserstackLocal: true,
 
   specs: [],
   suites: {},
 
-  logLevel: 'silent',
+  logLevel: 'error',
+  deprecationWarnings: true,
   sync: true,
   coloredLogs: true,
   screenshotPath: './screenshots',
@@ -20,13 +31,13 @@ exports.config = {
   connectionRetryTimeout: 90000,
   framework: 'jasmine',
 
-  reporters: ['allure'],
-  reporterOptions: {
-    outputDir: './',
-    allure: {
-      outputDir: 'report/allure-results',
-    },
-  },
+  // reporters: ['allure'],
+  // reporterOptions: {
+  //   outputDir: './',
+  //   allure: {
+  //     outputDir: 'report/allure-results',
+  //   },
+  // },
 
   jasmineNodeOpts: {
     defaultTimeoutInterval: 9999999,
@@ -34,6 +45,7 @@ exports.config = {
 
   onPrepare: () => {
     console.log('Running WebdriverIO Tests');
+
   },
 
   beforeSession: (config, capabilities) => {
@@ -44,14 +56,11 @@ exports.config = {
         },
       };
     }
+
+    console.log(capabilities);
   },
 
   before: () => {
-    console.log(
-      `Browser: ${browser.desiredCapabilities.browserName},
-       BaseURL: ${browser.options.baseUrl}`,
-    );
-
     const jcReporter = new JasmineConsoleReporter({
       colors: 1, // (0|false)|(1|true)|2
       cleanStack: 1, // (0|false)|(1|true)|2|3
@@ -63,10 +72,20 @@ exports.config = {
     });
 
     jasmine.getEnv().addReporter(jcReporter);
+    jasmine.getEnv().bailFast = () => {
+      const env = this;
+      env.afterEach(() => {
+        if (!this.results().passed()) {
+          env.specFilter = (spec) => {
+            return false;
+          };
+        }
+      });
+    };
   },
 
   onComplete() {
-    allureReport();
+    // allureReport();
     console.log(`WebdriverIO tests ran on ${new Date()} – All done!`);
   },
 

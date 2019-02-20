@@ -159,7 +159,7 @@ module.exports = class CustomArgs {
     switch (arg.toLowerCase()) {
       case 'headless':
         capabilities.browserName = 'chrome';
-        capabilities.chromeOptions = {
+        capabilities['goog:chromeOptions'] = {
           args: [
             'headless',
             'disable-gpu',
@@ -172,7 +172,7 @@ module.exports = class CustomArgs {
         };
         break;
       case 'chrome':
-        capabilities.chromeOptions = {
+        capabilities['goog:chromeOptions'] = {
           args: [
             'disable-gpu',
             'no-sandbox',
@@ -181,14 +181,13 @@ module.exports = class CustomArgs {
         };
         break;
       case 'firefox':
-        capabilities.marionette = true;
         capabilities['moz:firefoxOptions'] = {
-          binary: "/usr/local/firefox/bin/firefox",
+          // binary: "~/../..usr/local/firefox/bin/firefox",
           args: ['-headless'],
         };
         break;
       case 'safari':
-        capabilities.safariOptions = {};
+        // capabilities.safariOptions = {};
         break;
       default:
         console.log(`${arg} is not a valid browser capability option!`);

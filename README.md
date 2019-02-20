@@ -23,7 +23,7 @@ Please create a env.js that outlines the different environments you are using. T
   - Part 3: specify test spec file: ```node_modules/.bin/wdio sampleTests/wdio.conf.js --spec specs/table.spec.js```
   - Part 4: specify test suite: ```node_modules/.bin/wdio sampleTests/wdio.conf.js --suite smoke```
 
-- Custom cli args can be handled. Currently --env, --browser, --e_username, --e_password, --report or --allure 
+- Custom cli args can be handled. Currently --env, --browser, --report or --allure 
   - Environment arg --env options: local, dev, sit, stg, pre
   - Browser arg --browser: chrome, safari, firefox, headless 
   - Report arg --report: open
@@ -35,7 +35,7 @@ These generic methods include:
 - Interface to retrieve options from a drop list and select
 - Build object representing a table to get data and also interface with different rows/columns
 - Retrieve warning messages, error messages and labels
-- Set radio buttons, checkboxes and input fields 
+- Set radio buttons, checkbox and input fields 
 
 ## Utility 
 This folder contains functions that assist with tasks unrelated to the UI or API but assist in data generation, parsing data from objects and more. 
